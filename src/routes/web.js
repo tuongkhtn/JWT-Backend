@@ -1,9 +1,12 @@
+import express from "express"
+import { handleHelloWorld } from "../controller/homeController";
 
+const router = express.Router();
 
 const initWebRoutes = (app) => {
-    app.get("/", (req, res) => {
-        return res.send("Hell World")
-    })
+    router.get("/", handleHelloWorld);
+
+    return app.use("/", router);
 }
 
 export default initWebRoutes;
