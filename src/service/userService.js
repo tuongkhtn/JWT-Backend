@@ -8,21 +8,27 @@ const hashUserPassword = (password) => {
     return hashPassword
 }
 
-const createNewUser = (email, username, password) => {
+const createNewUser = async (email, username, password) => {
     let hashPassword = hashUserPassword(password);
 
-    connection.query(
-        "INSERT INTO USERS (EMAIL, NAME, PASSWORD) VALUES (?, ?, ?)", [email, username, hashPassword],
-        function (err, results, fields) {
-            console.log(results);
-            console.log(fields);
-        }
-    )
+    const connection = await mysql.createConnection({
+        host: process.env.DB_HOST,
+        port: process.env.DB_PORT,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_NAME,
+    })
+
+    try {
+        const [results, fields] = await connection.query(
+          'INSERT INTO USERS (EMAIL, NAME, PASSWORD) VALUES (?, ?, ?)', [email, username, hashPassword]
+        );
+    } catch (err) {
+        console.log(err);
+    }
 }
 
 const getUserList = async () => {
-    let users = []
-
     const connection = await mysql.createConnection({
         host: process.env.DB_HOST,
         port: process.env.DB_PORT,
@@ -36,16 +42,34 @@ const getUserList = async () => {
           'SELECT * FROM USERS'
         );
       
-        users = results
+        return results
     } catch (err) {
-    console.log(err);
+        console.log(err);
     }
 
-    return users;
+}
+
+const deleteUserById = async (id) => {
+    const connection = await mysql.createConnection({
+        host: process.env.DB_HOST,
+        port: process.env.DB_PORT,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_NAME,
+    })
+
+    try {
+        const [results, fields] = await connection.query(
+          'DELETE FROM USERS WHERE ID = ?', [id]
+        );      
+    } catch (err) {
+        console.log(err);
+    }
 }
 
 module.exports = {
     hashUserPassword,
     createNewUser,
     getUserList,
+    deleteUserById,
 }

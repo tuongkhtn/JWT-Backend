@@ -54,12 +54,14 @@
 
           <% users.forEach((user, index) => { %>
             <tr>
-              <th scope="row"><%= index + 1 %></th>
+              <th scope="row"><%= user.ID %></th>
               <td><%= user.EMAIL %></td>
               <td><%= user.NAME %></td>
               <td>
                 <button class="btn btn-warning">Edit</button>
-                <button class="btn btn-danger">Delete</button>
+                <form style="display: inline;" action="/delete-user/<%= user.ID %>" method="post">
+                  <button class="btn btn-danger" type="submit">Delete</button>
+                </form>
               </td>
             </tr>
           <% }); %> 

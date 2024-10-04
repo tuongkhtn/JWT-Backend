@@ -1,4 +1,4 @@
-import { hashUserPassword, createNewUser, getUserList } from "../service/userService"
+import { createNewUser, getUserList, deleteUserById } from "../service/userService"
 require('dotenv').config()
 
 const handleHelloWorld = (req, res) => {
@@ -11,18 +11,22 @@ const handleUserPage = async (req, res) => {
     return res.render("user.ejs", {users})
 }
 
-const handleCreateNewUser = (req, res) => {
+const handleCreateNewUser = async (req, res) => {
     let {email, username, password} = req.body;
 
-    console.log({email, username, password} );
+    await createNewUser(email, username, password);
 
-    // createNewUser(email, username, password);
+    return res.redirect("/user")
+}
 
-    return res.send("handleCreateUser")
+const handleDeleteUser = async (req, res) => {
+    await deleteUserById(req.params.id);
+    return res.redirect("/user")
 }
 
 module.exports = {
     handleHelloWorld,
     handleUserPage,
     handleCreateNewUser,
+    handleDeleteUser,
 }
