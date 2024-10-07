@@ -12,25 +12,31 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-    await queryInterface.bulkInsert('USERS', 
+
+    await queryInterface.bulkInsert('User', 
       [
         {
-          EMAIL: 'tuong@gmail.com',
+          EMAIL: 'htt@gmail.com',
           NAME: 'tuong',
-          PASSWORD: '123jfja'
+          PASSWORD: '1234',
+          createdAt: new Date(),
+          updatedAt: new Date(),
         },
         {
-          EMAIL: 'tuong123@gmail.com',
-          NAME: 'tuonge2qe',
-          PASSWORD: '123jfjaccada'
+          EMAIL: 'htt123@gmail.com',
+          NAME: 'tuonadag',
+          PASSWORD: '123q2das4',
+          createdAt: new Date(),
+          updatedAt: new Date(),
         },
         {
-          EMAIL: 'tuonge2ea@gmail.com',
-          NAME: 'tuongcaaa',
-          PASSWORD: '123jfjadq3wq'
+          EMAIL: 'htdq2dat@gmail.com',
+          NAME: 'dad',
+          PASSWORD: '12sca34',
+          createdAt: new Date(),
+          updatedAt: new Date(),
         },
       ], {});
-    
   },
 
   async down (queryInterface, Sequelize) {
