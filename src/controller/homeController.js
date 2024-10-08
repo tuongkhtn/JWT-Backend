@@ -26,13 +26,7 @@ const handleDeleteUser = async (req, res) => {
 
 const getUpdateUserPage = async (req, res) => {
     let user = await userService.getUserById(req.params.id);
-    let dataUser = []
-
-    if(user && user.length > 0) {
-        dataUser = user[0]
-    }
-
-    console.log(">>> dataUser: ", dataUser);
+    let dataUser = user;
 
     return res.render("user_update.ejs", { dataUser })
 }

@@ -63,10 +63,10 @@
               <td><%= user.EMAIL %></td>
               <td><%= user.NAME %></td>
               <td>
-                <a class="btn btn-warning" href="/update-user/<%= user.ID %>">
+                <a class="btn btn-warning" href="/update-user/<%= user.id %>">
                   Edit
                 </a>
-                <form style="display: inline;" action="/delete-user/<%= user.ID %>" method="post">
+                <form style="display: inline;" action="/delete-user/<%= user.id %>" method="post">
                   <button class="btn btn-danger" type="submit">Delete</button>
                 </form>
               </td>
