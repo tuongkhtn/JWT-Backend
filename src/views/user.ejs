@@ -60,8 +60,8 @@
           <% users.forEach((user, index) => { %>
             <tr>
               <th scope="row"><%= index + 1 %></th>
-              <td><%= user.EMAIL %></td>
-              <td><%= user.NAME %></td>
+              <td><%= user.email %></td>
+              <td><%= user.name %></td>
               <td>
                 <a class="btn btn-warning" href="/update-user/<%= user.id %>">
                   Edit

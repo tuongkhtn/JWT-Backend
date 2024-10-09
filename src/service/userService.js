@@ -14,9 +14,9 @@ const createNewUser = async (email, username, password) => {
 
     try {
         await db.User.create({
-            EMAIL: email,
-            NAME: username,
-            PASSWORD: hashPassword
+            email: email,
+            name: username,
+            password: hashPassword
         })
     } catch (err) {
         console.log(err);
@@ -99,8 +99,8 @@ const getUserById = async (id) => {
 const updateUserById = async (id, email, username) => {
     await db.User.update(
         { 
-            EMAIL: email,
-            NAME: username,
+            email: email,
+            name: username,
         },
         {
           where: {
