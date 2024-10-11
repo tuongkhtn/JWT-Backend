@@ -7,6 +7,11 @@ const testApi = (req, res) => {
     })
 }
 
+const handleRegister = (req, res) => {
+    console.log(">>> receive data: ", req.body);
+}
+
 module.exports = {
     testApi,
+    handleRegister,
 }

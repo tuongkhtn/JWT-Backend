@@ -1,22 +1,17 @@
 import express from "express";
 import configViewEngine from "./config/viewEngine";
+import configCors from "./config/cors"
 import initWebRoutes from "./routes/web";
+import initApiRoutes from "./routes/api"
 import bodyParser from "body-parser"
 import connection from "./config/connectDB"
 require("dotenv").config()
 
 const app = express();
 
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", process.env.REACT_URL); // update to match the domain you will make the request from
-    res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
-    res.header(
-      "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept"
-    );
-    next();
-});
 
+// config cors
+configCors(app);
 
 // config view engine
 configViewEngine(app);
@@ -30,6 +25,7 @@ connection();
 
 // init web routes
 initWebRoutes(app);
+initApiRoutes(app);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
