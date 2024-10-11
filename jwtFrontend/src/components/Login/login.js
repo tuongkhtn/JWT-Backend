@@ -1,7 +1,12 @@
-import "./login.scss"
-
+import "./Login.scss"
+import { useNavigate } from "react-router"
 
 const Login = (props) => {
+    const navigate = useNavigate();
+    const handleCreateNewAccount = () => {
+        navigate("/register");
+    }
+
     return (
         <div className="login-container pt-5">
             <div className="container">
@@ -27,7 +32,9 @@ const Login = (props) => {
                         </span>
                         <hr/>
                         <div className="text-center">
-                            <button className="btn btn-success btn-create-account">Create new account</button>
+                            <button className="btn btn-success btn-create-account" onClick={() => handleCreateNewAccount()}>
+                                Create new account
+                            </button>
                         </div>
                     </div>
                 </div>

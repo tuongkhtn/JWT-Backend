@@ -1,6 +1,6 @@
 import './App.scss'
-import NavBar from './components/Navigation/navbar';
-import Login from './components/Login/login';
+import Login from "./components/Login/Login"
+import Register from "./components/Register/Register"
 import {
   BrowserRouter as Router,
   Routes,
@@ -11,7 +11,8 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path='login' element={<Login/>}/>
+        <Route path='/login' element={<Login/>}/>
+        <Route path='/register' element={<Register/>} />
       </Routes>
 
     </Router>
