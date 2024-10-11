@@ -8,7 +8,53 @@
     border: 1px solid green;
 }
 
-.gray {
-    border: 1px solid gray;
-    border-radius: 10px;
+.login-container {
+    background-color: #f2f4f7;
+    height: 100vh;
+
+
+    .content-left {
+        padding-top: 20px;
+
+        .brand {
+            color: #0866ff;
+            font-size: 60px;
+            font-weight: 600;
+        }
+
+        .detail {
+            font-size: 20px;
+            font-weight: 400;
+        }
+    }
+
+    .content-right {
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1);
+        background-color: #fff; 
+
+        .brand {
+            color: #0866ff;
+            font-size: 33px;
+            font-weight: 600;
+        }
+
+        .btn-loggin {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .forgot-password {
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+        .btn-create-account {
+            font-size: 17px;
+            font-weight: 500;
+        }
+    }
 }
