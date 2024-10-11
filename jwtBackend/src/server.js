@@ -1,4 +1,4 @@
-import express from "express"
+import express from "express";
 import configViewEngine from "./config/viewEngine";
 import initWebRoutes from "./routes/web";
 import bodyParser from "body-parser"
@@ -20,7 +20,6 @@ connection();
 
 // init web routes
 initWebRoutes(app);
-
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
