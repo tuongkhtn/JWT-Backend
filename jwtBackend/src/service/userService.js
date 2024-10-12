@@ -3,8 +3,8 @@ import mysql from "mysql2/promise"
 import db from "../models/index"
 require('dotenv').config()
 
+const salt = bcrypt.genSaltSync(10);
 const hashUserPassword = (password) => {
-    const salt = bcrypt.genSaltSync(10);
     let hashPassword = bcrypt.hashSync(password, salt);
     return hashPassword
 }
