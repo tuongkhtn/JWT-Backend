@@ -37,9 +37,9 @@ const Login = (props) => {
         return true;
     }
 
-    const handleLogin = () => {
+    const handleLogin = async () => {
         if(isValidInputs()) {
-            loginUser(valueLogin, password);   
+            await loginUser(valueLogin, password);   
         }
     }
 

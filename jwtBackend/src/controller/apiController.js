@@ -23,10 +23,12 @@ const handleRegister = async (req, res) => {
         console.log(">>>", data)
 
         return res.status(200).json({
-            ...data,
+            EM: data.EM,
+            EC: data.EC,
             DT: "", 
         })
     } catch(e) {
+        console.log(">>>", e);
         return res.status(500).json({
             EM: "error from server", // error message
             EC: -1, // error code
@@ -35,8 +37,33 @@ const handleRegister = async (req, res) => {
     }
 }
 
-const handleLogin = (req, res) => {
-    console.log(">>>", req.body);
+const handleLogin = async (req, res) => {
+    try {
+        // req.body: {valueLogin, password}
+        if(!req.body.valueLogin || !req.body.password) {
+            return res.status(200).json({
+                EM: "Missing required parameters",
+                EC: 1,
+                DT: "", 
+            })
+        }
+
+        let data = await loginRegisterService.handleLoginUser(req.body);
+
+        return res.status(200).json({
+            EM: data.EM,
+            EC: data.EC,
+            DT: data.DT, 
+        })
+        
+    } catch(e) {
+        console.log(">>>", e);
+        return res.status(500).json({
+            EM: "error from server", // error message
+            EC: -1, // error code
+            DT: "", // data 
+        })
+    } 
 }
 
 module.exports = {
