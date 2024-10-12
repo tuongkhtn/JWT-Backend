@@ -23,8 +23,7 @@ const handleRegister = async (req, res) => {
         console.log(">>>", data)
 
         return res.status(200).json({
-            EM: "A user is created successfully!",
-            EC: 0,
+            ...data,
             DT: "", 
         })
     } catch(e) {
