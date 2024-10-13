@@ -39,7 +39,22 @@ const Login = (props) => {
 
     const handleLogin = async () => {
         if(isValidInputs()) {
-            await loginUser(valueLogin, password);   
+            let response = await loginUser(valueLogin, password);
+
+            if(response && response.data) {
+                if(response.data.EC === 0) {
+                    let data = {
+                        isAuthenticated: true,
+                        token: "Fake token"
+                    }
+                    sessionStorage.setItem("account", JSON.stringify(data));
+
+                    navigate("/users")
+
+                } else {
+                    toast.error(response.data.EM)
+                }
+            }
         }
     }
 
