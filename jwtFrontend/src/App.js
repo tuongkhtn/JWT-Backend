@@ -1,17 +1,13 @@
 import './App.scss'
-import Login from "./components/Login/Login"
-import Register from "./components/Register/Register"
 import {
   BrowserRouter as Router,
-  Routes,
-  Route,
 } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import User from './components/ManageUser/User';
 import { useEffect, useState } from 'react';
 import _ from "lodash"
 import NavBar from './components/Navigation/NavBar';
+import AppRoutes from './routes/AppRoutes';
 
 
 function App() {
@@ -26,13 +22,13 @@ function App() {
 
   return (
     <Router>
-      {account && !_.isEmpty(account) && account.isAuthenticated && <NavBar/>}
+      <div className='app-header'>
+        <NavBar/>
+      </div>
 
-      <Routes>
-        <Route path='/login' element={<Login/>}/>
-        <Route path='/register' element={<Register/>} />
-        <Route path='/users' element={<User/>} />
-      </Routes>
+      <div className='app-container'>
+          <AppRoutes/>
+      </div>
 
       <ToastContainer
         position="top-right"
