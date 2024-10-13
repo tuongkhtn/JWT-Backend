@@ -7,7 +7,7 @@ const User = () => {
 
     useEffect(() => {
         let session = sessionStorage.getItem("account");
-        if(!session || _.isEmpty(session) || !session.isAuthenticated) {
+        if(!session) {
             navigate('/login');
         }
 

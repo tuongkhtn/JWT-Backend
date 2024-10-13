@@ -51,10 +51,18 @@ const Login = (props) => {
 
                     navigate("/users")
 
+                    window.location.reload();
+
                 } else {
                     toast.error(response.data.EM)
                 }
             }
+        }
+    }
+
+    const handleKeyPressPassword = (e) => {
+        if(e.charCode === 13) {
+            handleLogin();
         }
     }
 
@@ -88,6 +96,7 @@ const Login = (props) => {
                             placeholder="Password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
+                            onKeyPress={(e) => handleKeyPressPassword(e)}
                         />
                         <button className="btn btn-primary btn-loggin" onClick={() => handleLogin()}>Log in</button>
                         <span className="text-center">
