@@ -27,25 +27,6 @@ const getUserList = async () => {
     let users = [];
     users = await db.User.findAll();
     return users;
-    
-    // const connection = await mysql.createConnection({
-    //     host: process.env.DB_HOST,
-    //     port: process.env.DB_PORT,
-    //     user: process.env.DB_USER,
-    //     password: process.env.DB_PASSWORD,
-    //     database: process.env.DB_NAME,
-    // })
-
-    // try {
-    //     const [results, fields] = await connection.query(
-    //       'SELECT * FROM User'
-    //     );
-      
-    //     return results
-    // } catch (err) {
-    //     console.log(err);
-    // }
-
 }
 
 const deleteUserById = async (id) => {
@@ -54,46 +35,12 @@ const deleteUserById = async (id) => {
           id: id,
         },
     });
-
-    // const connection = await mysql.createConnection({
-    //     host: process.env.DB_HOST,
-    //     port: process.env.DB_PORT,
-    //     user: process.env.DB_USER,
-    //     password: process.env.DB_PASSWORD,
-    //     database: process.env.DB_NAME,
-    // })
-
-    // try {
-    //     const [results, fields] = await connection.query(
-    //       'DELETE FROM User WHERE ID = ?', [id]
-    //     );      
-    // } catch (err) {
-    //     console.log(err);
-    // }
 }
 
 const getUserById = async (id) => {
     let user = {}
     user = await db.User.findOne({ where: { id: id } });
     return user;
-    
-    // const connection = await mysql.createConnection({
-    //     host: process.env.DB_HOST,
-    //     port: process.env.DB_PORT,
-    //     user: process.env.DB_USER,
-    //     password: process.env.DB_PASSWORD,
-    //     database: process.env.DB_NAME,
-    // })
-
-    // try {
-    //     const [results, fields] = await connection.query(
-    //       'SELECT * FROM User WHERE ID = ?', [id],
-    //     );      
-    //     console.log(results);
-    //     return results;
-    // } catch (err) {
-    //     console.log(err);
-    // }
 }
 
 const updateUserById = async (id, email, username) => {
@@ -108,22 +55,6 @@ const updateUserById = async (id, email, username) => {
           },
         },
     );
-
-    // const connection = await mysql.createConnection({
-    //     host: process.env.DB_HOST,
-    //     port: process.env.DB_PORT,
-    //     user: process.env.DB_USER,
-    //     password: process.env.DB_PASSWORD,
-    //     database: process.env.DB_NAME,
-    // })
-
-    // try {
-    //     const [results, fields] = await connection.query(
-    //       'UPDATE User SET EMAIL = ?, NAME = ? WHERE ID = ?', [email, username, id],
-    //     );      
-    // } catch (err) {
-    //     console.log(err);
-    // }
 }
 
 module.exports = {
