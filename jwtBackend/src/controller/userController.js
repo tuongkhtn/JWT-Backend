@@ -2,7 +2,7 @@ import userApiService from "../service/userApiService"
 
 const getUsers = async (req, res) => {
     try {
-        let data = await userApiService.read();
+        let data = await userApiService.read(req.query);
 
         return res.status(200).json({
             EM: data.EM,

@@ -1,26 +1,34 @@
 import _ from "lodash"
 import { useEffect, useState } from "react"
 import { getAllUsersFromBackend } from "../../service/userService"
+import ReactPaginate from "react-paginate"
 
 const User = () => {
     const [listUsers, setListUsers] = useState([]);
+    const [page, setPage] = useState(1);
+    const [totalPage, setTotalPage] = useState(0);
+    const limit = 2;
 
     useEffect(() => {
         const getUsers = async () => {
-            let response = await getAllUsersFromBackend();
-            // console.log(">>>", response.data);
+            let response = await getAllUsersFromBackend(page, limit);
             if(response && response.data) {
-                setListUsers(response.data.DT);
+                setTotalPage(response.data.DT.totalPage);
+                setListUsers(response.data.DT.users);
             }
         }
 
         getUsers();
-    }, [])
+    }, [page])
+
+    const handlePageClick = (e) => {
+        setPage(e.selected + 1);
+    }
 
     return (
         <div className="container">
-            <div className="login-container">
-                <div>
+            <div className="user-container">
+                <div className="user-header">
                     <h3>Table of users</h3>
                 </div>
                 <div>
@@ -63,6 +71,30 @@ const User = () => {
                         </tbody>
                     </table>
                 </div>
+                {totalPage > 0 && 
+                    <div className="user-footer">
+                        <ReactPaginate
+                            nextLabel="next >"
+                            onPageChange={handlePageClick}
+                            pageRangeDisplayed={2}
+                            marginPagesDisplayed={1}
+                            pageCount={totalPage}
+                            previousLabel="< previous"
+                            pageClassName="page-item"
+                            pageLinkClassName="page-link"
+                            previousClassName="page-item"
+                            previousLinkClassName="page-link"
+                            nextClassName="page-item"
+                            nextLinkClassName="page-link"
+                            breakLabel="..."
+                            breakClassName="page-item"
+                            breakLinkClassName="page-link"
+                            containerClassName="pagination"
+                            activeClassName="active"
+                            renderOnZeroPageCount={null}
+                        />
+                    </div>
+                }
             </div>
         </div>
     )
