@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import { getAllUsersFromBackend, deleteUserById } from "../../service/userService"
 import ReactPaginate from "react-paginate"
 import ModalDelete from "./ModalDelete"
+import ModalUser from "./ModalUser"
 
 const User = () => {
     const [listUsers, setListUsers] = useState([]);
@@ -129,6 +130,8 @@ const User = () => {
                 handleClose={handleClose} 
                 handleConfirmDeleteUser={handleConfirmDeleteUser}
             />
+
+            <ModalUser />
 
         </>
     )
