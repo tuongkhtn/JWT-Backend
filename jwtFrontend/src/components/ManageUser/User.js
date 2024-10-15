@@ -29,7 +29,7 @@ const User = () => {
         setPage(e.selected + 1);
     }
 
-    const handleDeleteUser = (userId) => {
+    const handleClickToShowModal = (userId) => {
         setShowModal(true);
         setDataModal(userId);
     }
@@ -87,8 +87,8 @@ const User = () => {
                                                     <td>{user.sex}</td>
                                                     <td>{user.Group?.name}</td>
                                                     <td>
-                                                        <button className="btn btn-warning mx-3">Edit</button>
-                                                        <button className="btn btn-danger" onClick={() => handleDeleteUser(user.id)}>Delete</button>
+                                                        <button className="btn btn-warning mx-3" onClick={() => handleClickToShowModal(user.id)}>Edit</button>
+                                                        <button className="btn btn-danger" onClick={() => handleClickToShowModal(user.id)}>Delete</button>
                                                     </td>
                                                 </tr>
                                             )
@@ -131,7 +131,7 @@ const User = () => {
                 handleConfirmDeleteUser={handleConfirmDeleteUser}
             />
 
-            <ModalUser />
+            <ModalUser show={showModal} handleClose={handleClose} />
 
         </>
     )
