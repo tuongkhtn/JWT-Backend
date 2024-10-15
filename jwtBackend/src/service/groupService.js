@@ -3,7 +3,7 @@ import db from "../models/index"
 const read = async () => {
     try {
         let data = await db.Group.findAll({
-            attributes: ['name'],
+            attributes: ['id', 'name'],
             order: [['name', 'ASC']]
         })
 

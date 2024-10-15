@@ -55,7 +55,7 @@ const User = () => {
                     </div>
                     <div>
                         <button className="btn btn-success">Refresh</button>
-                        <button className="btn btn-primary mx-3">Add new User</button>
+                        <button className="btn btn-primary mx-3" onClick={() => setShowModal(true)}>Add new User</button>
                     </div>
                     <div className="mt-3">
                         <table className="table table-hover table-bordered">
@@ -87,7 +87,7 @@ const User = () => {
                                                     <td>{user.sex}</td>
                                                     <td>{user.Group?.name}</td>
                                                     <td>
-                                                        <button className="btn btn-warning mx-3" onClick={() => handleClickToShowModal(user.id)}>Edit</button>
+                                                        <button className="btn btn-warning mx-3">Edit</button>
                                                         <button className="btn btn-danger" onClick={() => handleClickToShowModal(user.id)}>Delete</button>
                                                     </td>
                                                 </tr>
