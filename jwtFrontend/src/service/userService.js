@@ -20,9 +20,14 @@ const deleteUserById = (userId) => {
     });
 }
 
+const createNewUser = (user) => {
+    return axios.post("http://localhost:8080/api/v1/users/create", {...user})
+}
+
 export {
     registerNewUser,
     loginUser,
     getAllUsersFromBackend,
     deleteUserById,
+    createNewUser,
 }

@@ -12,6 +12,7 @@ const initApiRoutes = (app) => {
 
     router.get("/users/read", userController.getUsers);
     router.delete("/users/delete", userController.deleteUserById);
+    router.post("/users/create", userController.createNewUser);
 
     router.get("/groups/read", groupController.getGroupName);
 

@@ -131,7 +131,7 @@ const User = () => {
                 handleConfirmDeleteUser={handleConfirmDeleteUser}
             />
 
-            <ModalUser show={showModal} handleClose={handleClose} />
+            <ModalUser show={showModal} handleClose={handleClose} showNewUser={getUsers}/>
 
         </>
     )

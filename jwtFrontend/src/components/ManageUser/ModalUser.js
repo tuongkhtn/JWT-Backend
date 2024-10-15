@@ -5,6 +5,7 @@ import { useEffect, useState } from "react"
 import { getGroupNameFromBackend } from "../../service/groupService"
 import { toast } from "react-toastify"
 import _ from "lodash"
+import { createNewUser } from "../../service/userService"
 
 const ModalUser = (props) => {
     const defaultUserInfo = {
@@ -61,9 +62,15 @@ const ModalUser = (props) => {
         return valid;
     }
     
-    const handleCreateUser = () => {
+    const handleCreateUser = async () => {
         if(handleValidInputs()) {
-            alert(2);
+            let response = await createNewUser(user);
+            if(response && response.data && response.data.EC === 0) {
+                props.showNewUser();
+                props.handleClose();
+            } else {
+                toast.error(response.data.EM);
+            }
         }
     }
 
