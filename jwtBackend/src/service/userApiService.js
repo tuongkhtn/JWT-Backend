@@ -14,7 +14,7 @@ const read = async (query) => {
         if(page && limit) {
             let offset = (page - 1) * limit;
             const { count, rows } = await db.User.findAndCountAll({
-                attributes: ['id', 'name', 'address', 'phone', 'sex'],
+                attributes: ['id', 'email', 'name', 'address', 'phone', 'sex'],
                 include: {model: db.Group, attributes: ['name']},
                 offset: offset,
                 limit: limit,
@@ -25,7 +25,7 @@ const read = async (query) => {
 
         } else {
             data.users = await db.User.findAll({
-                attributes: ['id', 'name', 'address', 'phone', 'sex'],
+                attributes: ['id', 'email', 'name', 'address', 'phone', 'sex'],
                 include: {model: db.Group, attributes: ['name']}
             });
         }
@@ -46,6 +46,30 @@ const read = async (query) => {
     }
 }
 
+const destroy = async (id) => {
+    try {
+        await db.User.destroy({
+            where: {
+                id: id
+            }
+        })
+
+        return {
+            EM: "Success delete",
+            EC: 0,
+            DT: ""
+        }
+    } catch(e) {
+        console.log(">>>", e);
+        return {
+            EM: "Something wrongs in service...",
+            EC: -2,
+            DT: "",
+        }   
+    }
+}
+
 module.exports = {
     read,
+    destroy,
 }

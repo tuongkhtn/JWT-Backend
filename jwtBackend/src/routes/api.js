@@ -10,6 +10,7 @@ const initApiRoutes = (app) => {
     router.post("/login", apiController.handleLogin)
 
     router.get("/users/read", userController.getUsers);
+    router.delete("/users/delete", userController.deleteUserById);
 
     return app.use("/api/v1", router);
 }   
