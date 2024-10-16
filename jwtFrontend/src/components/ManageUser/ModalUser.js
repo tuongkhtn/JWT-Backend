@@ -40,6 +40,10 @@ const ModalUser = (props) => {
 
     useEffect(() => {
         getGroupName();
+        if(props.action === "UPDATE") {
+            // setUser(props.)
+            console.log(">>>", props.userUpdate);
+        }
     }, [])
 
     const handleValidInputs = () => {
@@ -68,11 +72,17 @@ const ModalUser = (props) => {
             if(response && response.data && response.data.EC === 0) {
                 props.showNewUser();
                 props.handleClose();
+                setUser(defaultUserInfo);
             } else {
                 toast.error(response.data.EM);
             }
         }
     }
+
+    const handleUpdateUser = async (userId) => {
+
+    }
+
 
     return (
         <Modal size="lg" show={props.show} onHide={props.handleClose}>
@@ -156,10 +166,16 @@ const ModalUser = (props) => {
             </div>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={props.handleClose}>
+            <Button 
+                variant="secondary" 
+                onClick={props.handleClose}
+            >
                 Close
             </Button>
-            <Button variant="primary" onClick={() => handleCreateUser()}>
+            <Button 
+                variant="primary" 
+                onClick={() => handleUpdateUser(props.id)}
+            >
                 Save
             </Button>
           </Modal.Footer>

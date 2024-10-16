@@ -24,10 +24,16 @@ const createNewUser = (user) => {
     return axios.post("http://localhost:8080/api/v1/users/create", {...user})
 }
 
+const getUserById = (userId) => {
+    console.log(userId);
+    return axios.get(`http://localhost:8080/api/v1/users/read/${userId}`)
+}
+
 export {
     registerNewUser,
     loginUser,
     getAllUsersFromBackend,
     deleteUserById,
     createNewUser,
+    getUserById,
 }

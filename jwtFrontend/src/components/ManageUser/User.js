@@ -1,6 +1,6 @@
 import _ from "lodash"
 import { useEffect, useState } from "react"
-import { getAllUsersFromBackend, deleteUserById } from "../../service/userService"
+import { getAllUsersFromBackend, deleteUserById, getUserById } from "../../service/userService"
 import ReactPaginate from "react-paginate"
 import ModalDelete from "./ModalDelete"
 import ModalUser from "./ModalUser"
@@ -9,8 +9,11 @@ const User = () => {
     const [listUsers, setListUsers] = useState([]);
     const [page, setPage] = useState(1);
     const [totalPage, setTotalPage] = useState(0);
-    const [showModal, setShowModal] = useState(false);
+    const [showModalDelete, setShowModalDelete] = useState(false);
+    const [showModalUser, setShowModalUser] = useState(false);
     const [dataModal, setDataModal] = useState(-1);
+    const [action, setAction] = useState("CREATE");
+    const [userUpdate, setUserUpdate] = useState({});
     const limit = 2;
 
     const getUsers = async () => {
@@ -25,17 +28,21 @@ const User = () => {
         getUsers();
     }, [page])
 
+    // pagination
     const handlePageClick = (e) => {
         setPage(e.selected + 1);
     }
 
-    const handleClickToShowModal = (userId) => {
-        setShowModal(true);
-        setDataModal(userId);
+    // close modal
+    const handleClose = () => {
+        setShowModalDelete(false);
+        setShowModalUser(false);
     }
 
-    const handleClose = () => {
-        setShowModal(false);
+    // delete user
+    const handleClickToShowModalDelete = (userId) => {
+        setShowModalDelete(true);
+        setDataModal(userId);
     }
 
     const handleConfirmDeleteUser = async () => {
@@ -44,6 +51,22 @@ const User = () => {
             getUsers();
         }
         handleClose();
+    }
+
+    // create and udpate user
+    const handleClickToShowModalUser = async (newAction, ...others) => {
+        setAction(newAction);
+        setShowModalUser(true);
+        if(newAction === "UPDATE") {
+            let response = await getUserById(others[0].id);
+            if(response && response.data && response.data.EC === 0) {
+                setUserUpdate(response.data.DT);
+            } else {
+                console.error("Error to get information user by id");
+            }
+        } else {
+            
+        }
     }
 
     return (
@@ -55,7 +78,7 @@ const User = () => {
                     </div>
                     <div>
                         <button className="btn btn-success">Refresh</button>
-                        <button className="btn btn-primary mx-3" onClick={() => setShowModal(true)}>Add new User</button>
+                        <button className="btn btn-primary mx-3" onClick={() => handleClickToShowModalUser("CREATE")}>Add new User</button>
                     </div>
                     <div className="mt-3">
                         <table className="table table-hover table-bordered">
@@ -78,7 +101,7 @@ const User = () => {
                                         {listUsers.map((user, index) => {
                                             return (
                                                 <tr key={index + 1}>
-                                                    <th scope="row">{index+1}</th>
+                                                    <th scope="row">{(page-1) * limit + index + 1}</th>
                                                     <td>{user.id}</td>
                                                     <td>{user.email}</td>
                                                     <td>{user.name}</td>
@@ -87,8 +110,18 @@ const User = () => {
                                                     <td>{user.sex}</td>
                                                     <td>{user.Group?.name}</td>
                                                     <td>
-                                                        <button className="btn btn-warning mx-3">Edit</button>
-                                                        <button className="btn btn-danger" onClick={() => handleClickToShowModal(user.id)}>Delete</button>
+                                                        <button 
+                                                            className="btn btn-warning mx-3"
+                                                            onClick={() => handleClickToShowModalUser("UPDATE", {id: user.id})}
+                                                        >
+                                                            Edit
+                                                        </button>
+                                                        <button 
+                                                            className="btn btn-danger" 
+                                                            onClick={() => handleClickToShowModalDelete(user.id)}
+                                                        >
+                                                            Delete
+                                                        </button>
                                                     </td>
                                                 </tr>
                                             )
@@ -126,12 +159,18 @@ const User = () => {
             </div>
 
             <ModalDelete 
-                show={showModal} 
+                show={showModalDelete} 
                 handleClose={handleClose} 
                 handleConfirmDeleteUser={handleConfirmDeleteUser}
             />
 
-            <ModalUser show={showModal} handleClose={handleClose} showNewUser={getUsers}/>
+            <ModalUser 
+                show={showModalUser} 
+                handleClose={handleClose} 
+                showNewUser={getUsers} 
+                action={action}
+                userUpdate={userUpdate}
+            />
 
         </>
     )

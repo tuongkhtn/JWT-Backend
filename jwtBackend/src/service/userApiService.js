@@ -19,6 +19,7 @@ const read = async (query) => {
                 include: {model: db.Group, attributes: ['name']},
                 offset: offset,
                 limit: limit,
+                order: [['id', 'DESC']],
             })
 
             data.totalPage = Math.ceil(count / limit);
@@ -27,12 +28,38 @@ const read = async (query) => {
         } else {
             data.users = await db.User.findAll({
                 attributes: ['id', 'email', 'name', 'address', 'phone', 'sex'],
-                include: {model: db.Group, attributes: ['name']}
+                include: {model: db.Group, attributes: ['name']},
+                order: [['id', 'DESC']],
             });
         }
 
         return {
             EM: "Sucess read",
+            EC: 0,
+            DT: data,
+        }
+
+    } catch(e) {
+        console.log(">>>", e);
+        return {
+            EM: "Something wrongs in service...",
+            EC: -2,
+            DT: "",
+        }
+    }
+}
+
+const readId = async (id) => {
+    try {
+        let data = await db.User.findOne({
+            attributes: ['email', 'name', 'address', 'phone', 'sex', 'groupId'],
+            where: {
+                id: id
+            },
+        })
+
+        return {
+            EM: "Sucess read id",
             EC: 0,
             DT: data,
         }
@@ -124,4 +151,5 @@ module.exports = {
     read,
     destroy,
     create,
+    readId,
 }
