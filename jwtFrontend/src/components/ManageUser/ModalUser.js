@@ -208,7 +208,9 @@ const ModalUser = (props) => {
             </Button>
             <Button 
                 variant="primary" 
-                onClick={() => handleUpdateUser(user)}
+                onClick={() => {
+                    props.action === "CREATE" ? handleCreateUser() : handleUpdateUser(user);
+                }}
             >
                 Save
             </Button>
