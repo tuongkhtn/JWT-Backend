@@ -1,3 +1,4 @@
+import "./User.scss"
 import _ from "lodash"
 import { useEffect, useState } from "react"
 import { getAllUsersFromBackend, deleteUserById, getUserById } from "../../service/userService"
@@ -70,6 +71,11 @@ const User = () => {
         }
     }
 
+    // refresh
+    const handleRefresh = async () => {
+        await getUsers()
+    }
+
     return (
         <>
             <div className="container">
@@ -78,10 +84,16 @@ const User = () => {
                         <h3>Table of users</h3>
                     </div>
                     <div>
-                        <button className="btn btn-success">Refresh</button>
-                        <button className="btn btn-primary mx-3" onClick={() => handleClickToShowModalUser("CREATE")}>Add new User</button>
+                        <button className="btn btn-success" onClick={() => handleRefresh()}>
+                            <i className="fa fa-refresh"></i>
+                            Refresh
+                        </button>
+                        <button className="btn btn-primary mx-3" onClick={() => handleClickToShowModalUser("CREATE")}>
+                            <i className="fa fa-plus"></i>
+                            Add new User
+                        </button>
                     </div>
-                    <div className="mt-3">
+                    <div className="user-body mt-3">
                         <table className="table table-hover table-bordered">
                             <thead>
                                 <tr>
@@ -111,18 +123,20 @@ const User = () => {
                                                     <td>{user.sex}</td>
                                                     <td>{user.Group?.name}</td>
                                                     <td>
-                                                        <button 
-                                                            className="btn btn-warning mx-3"
+                                                        <span 
+                                                            title="Edit"
+                                                            className="edit"
                                                             onClick={() => handleClickToShowModalUser("UPDATE", {id: user.id})}
                                                         >
-                                                            Edit
-                                                        </button>
-                                                        <button 
-                                                            className="btn btn-danger" 
+                                                            <i className="fa fa-pencil"></i>
+                                                        </span>
+                                                        <span 
+                                                            title="Delete"
+                                                            className="delete"
                                                             onClick={() => handleClickToShowModalDelete(user.id)}
                                                         >
-                                                            Delete
-                                                        </button>
+                                                            <i className="fa fa-trash"></i>
+                                                        </span>
                                                     </td>
                                                 </tr>
                                             )

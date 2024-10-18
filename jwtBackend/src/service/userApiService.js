@@ -152,10 +152,8 @@ const update = async (user) => {
         // user: {id, email, name, address, phone, sex, groupId, password=""}
         await db.User.update(
             {
-                email: user.email,
                 name: user.name,
                 address: user.address,
-                phone: user.phone,
                 sex: user.sex,
                 groupId: user.groupId,
             },
