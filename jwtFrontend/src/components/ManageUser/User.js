@@ -37,6 +37,7 @@ const User = () => {
     const handleClose = () => {
         setShowModalDelete(false);
         setShowModalUser(false);
+        setAction("CREATE");
     }
 
     // delete user
@@ -168,8 +169,8 @@ const User = () => {
                 show={showModalUser} 
                 handleClose={handleClose} 
                 showNewUser={getUsers} 
-                action={action}
                 userUpdate={userUpdate}
+                action={action}
             />
 
         </>

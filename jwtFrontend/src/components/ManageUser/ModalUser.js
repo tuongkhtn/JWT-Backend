@@ -47,12 +47,15 @@ const ModalUser = (props) => {
                     data[key] = "";
                 }
             }
+            if(_.isEmpty(data)) {
+                data = defaultUserInfo;
+            }
             data.password = "";
             setUser(data);
         } else {
             setUser(defaultUserInfo);
         }
-    }, [props.userUpdate])
+    }, [props.userUpdate, props.action])
 
     const handleValidInputs = () => {
         setValidUser(defaultValidUser);
