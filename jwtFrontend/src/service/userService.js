@@ -25,9 +25,12 @@ const createNewUser = (user) => {
 }
 
 const getUserById = (userId) => {
-    console.log(userId);
     return axios.get(`http://localhost:8080/api/v1/users/read/${userId}`)
 }
+
+const updateUserById = (user) => {
+    return axios.put(`http://localhost:8080/api/v1/users/update`, {...user})
+}   
 
 export {
     registerNewUser,
@@ -36,4 +39,5 @@ export {
     deleteUserById,
     createNewUser,
     getUserById,
+    updateUserById,
 }

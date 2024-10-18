@@ -5,7 +5,7 @@ import { useEffect, useState } from "react"
 import { getGroupNameFromBackend } from "../../service/groupService"
 import { toast } from "react-toastify"
 import _ from "lodash"
-import { createNewUser } from "../../service/userService"
+import { createNewUser, updateUserById } from "../../service/userService"
 
 const ModalUser = (props) => {
     const defaultUserInfo = {
@@ -41,10 +41,18 @@ const ModalUser = (props) => {
     useEffect(() => {
         getGroupName();
         if(props.action === "UPDATE") {
-            // setUser(props.)
-            console.log(">>>", props.userUpdate);
+            let data = props.userUpdate;
+            for(let key in data) {
+                if(!data[key]) {
+                    data[key] = "";
+                }
+            }
+            data.password = "";
+            setUser(data);
+        } else {
+            setUser(defaultUserInfo);
         }
-    }, [])
+    }, [props.userUpdate])
 
     const handleValidInputs = () => {
         setValidUser(defaultValidUser);
@@ -79,10 +87,16 @@ const ModalUser = (props) => {
         }
     }
 
-    const handleUpdateUser = async (userId) => {
-
+    const handleUpdateUser = async (userInfo) => {
+        let response = await updateUserById(userInfo);
+        if(response && response.data && response.data.EC === 0) {
+            props.showNewUser();
+            props.handleClose();
+            setUser(defaultUserInfo);
+        } else {
+            toast.error(response.data.EM);
+        }
     }
-
 
     return (
         <Modal size="lg" show={props.show} onHide={props.handleClose}>
@@ -93,6 +107,7 @@ const ModalUser = (props) => {
           </Modal.Header>
           <Modal.Body>
             <div className="row">
+                {/* Email */}
                 <div className="col-6">
                     <label>Email ({<span className="require-red">*</span>}):</label>
                     <input 
@@ -100,8 +115,11 @@ const ModalUser = (props) => {
                         type="email" 
                         value={user.email}
                         onChange={(e) => setUser({...user, email: e.target.value})}
+                        disabled={props.action === "UPDATE"}
                     />
                 </div>
+
+                {/* Phone number */}
                 <div className="col-6">
                     <label>Phone Number ({<span className="require-red">*</span>}):</label>
                     <input 
@@ -109,8 +127,11 @@ const ModalUser = (props) => {
                         type="text" 
                         value={user.phone}
                         onChange={(e) => setUser({...user, phone: e.target.value})}
+                        disabled={props.action === "UPDATE"}
                     />
                 </div>
+
+                {/* Username */}
                 <div className="col-6">
                     <label>Username:</label>
                     <input 
@@ -120,15 +141,22 @@ const ModalUser = (props) => {
                         onChange={(e) => setUser({...user, name: e.target.value})}
                     />
                 </div>
+
+                {/* Password */}
                 <div className="col-6">
-                    <label>Password ({<span className="require-red">*</span>}):</label>
-                    <input 
-                        className={validUser.password ? "form-control" : "form-control is-invalid"} 
-                        type="password" 
-                        value={user.password}
-                        onChange={(e) => setUser({...user, password: e.target.value})}
-                    />
+                    {props.action === "CREATE" && 
+                    <>
+                        <label>Password ({<span className="require-red">*</span>}):</label>
+                        <input 
+                            className={validUser.password ? "form-control" : "form-control is-invalid"} 
+                            type="password" 
+                            value={user.password}
+                            onChange={(e) => setUser({...user, password: e.target.value})}
+                        />
+                    </>}
                 </div>
+
+                {/* Address */}
                 <div className="col-12">
                     <label>Address:</label>
                     <input 
@@ -138,21 +166,27 @@ const ModalUser = (props) => {
                         onChange={(e) => setUser({...user, address: e.target.value})}
                     />
                 </div>
+
+                {/* Gender */}
                 <div className="col-6">
                     <label>Gender:</label>
                     <select 
                         className="form-select"
                         onChange={(e) => setUser({...user, sex: e.target.value})}
+                        value={user.sex ? user.sex : 'Male'}
                     >
                         <option defaultValue>Male</option>
                         <option>Female</option>
                     </select>
                 </div>
+
+                {/* GroupId */}
                 <div className="col-6">
                     <label>Group ({<span className="require-red">*</span>}):</label>
                     <select 
-                        className={validUser.groupId ? "form-control" : "form-control is-invalid"} 
+                        className={validUser.groupId ? "form-select" : "form-select is-invalid"} 
                         onChange={(e) => setUser({...user, groupId: +e.target.value})}
+                        value={user.groupId ? user.groupId : 1}
                     >
                         {groupName.length > 0 && 
                             groupName.map((group) => {
@@ -174,7 +208,7 @@ const ModalUser = (props) => {
             </Button>
             <Button 
                 variant="primary" 
-                onClick={() => handleUpdateUser(props.id)}
+                onClick={() => handleUpdateUser(user)}
             >
                 Save
             </Button>

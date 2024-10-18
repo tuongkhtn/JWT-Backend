@@ -52,7 +52,7 @@ const read = async (query) => {
 const readId = async (id) => {
     try {
         let data = await db.User.findOne({
-            attributes: ['email', 'name', 'address', 'phone', 'sex', 'groupId'],
+            attributes: ['id', 'email', 'name', 'address', 'phone', 'sex', 'groupId'],
             where: {
                 id: id
             },
@@ -147,9 +147,44 @@ const create = async (user) => {
     }
 }
 
+const update = async (user) => {
+    try {
+        // user: {id, email, name, address, phone, sex, groupId, password=""}
+        await db.User.update(
+            {
+                email: user.email,
+                name: user.name,
+                address: user.address,
+                phone: user.phone,
+                sex: user.sex,
+                groupId: user.groupId,
+            },
+            {
+                where: {
+                    id: user.id,
+                }
+            }
+        )
+
+        return {
+            EM: "Update user success",
+            EC: 0,
+            DT: ""
+        }
+    } catch(e) {
+        console.log(">>>", e);
+        return {
+            EM: "Something wrongs in service...",
+            EC: -2,
+            DT: "",
+        }   
+    }
+}
+
 module.exports = {
     read,
     destroy,
     create,
     readId,
+    update,
 }
