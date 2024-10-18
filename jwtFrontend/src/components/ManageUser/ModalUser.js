@@ -215,7 +215,7 @@ const ModalUser = (props) => {
                     props.action === "CREATE" ? handleCreateUser() : handleUpdateUser(user);
                 }}
             >
-                Save
+                {props.action === "CREATE" ? <span>Save</span> : <span>Update</span>}
             </Button>
           </Modal.Footer>
         </Modal>
