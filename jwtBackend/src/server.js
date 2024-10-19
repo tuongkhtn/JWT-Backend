@@ -27,6 +27,10 @@ connection();
 initWebRoutes(app);
 initApiRoutes(app);
 
+app.use((req, res) => {
+    return res.send('404 not found');
+})
+
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
     console.log(`Server is starting at ${PORT}`)
