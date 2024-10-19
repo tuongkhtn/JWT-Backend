@@ -1,35 +1,30 @@
 require('dotenv').config();
 import jwt from "jsonwebtoken";
 
-const createToken = () => {
-    let payload = {
-        name: 'tuong',
-        address: 'quang nam'
-    };
+const createToken = (payload) => {
     let key = process.env.JWT_SECRET;
     let data = null;
 
     // Synchronous
-    // try {
-    //     let token = jwt.sign(payload, key);
-    //     console.log(token);
-    //     data = token;
-    // } catch(err) {
-    //     console.log(err);
-    // }
+    try {
+        let token = jwt.sign(payload, key, {expiresIn: process.env.JWT_EXPIRES_IN});
+        data = token;
+    } catch(err) {
+        console.log(err);
+    }
     
-    // return data;
+    return data;
     
     // Asynchronous
-    jwt.sign(payload, key, function(err, token) {
-        if(err) {
-            console.log(err);
-        } else {
-            console.log(token);
-            data = token;
-        }
-    })
-    return data;
+    // jwt.sign(payload, key, function(err, token) {
+    //     if(err) {
+    //         console.log(err);
+    //     } else {
+    //         console.log(token);
+    //         data = token;
+    //     }
+    // })
+    // return data;
 }
 
 const verifyToken = (token) => {
@@ -37,23 +32,23 @@ const verifyToken = (token) => {
     let data = null;
 
     // Synchronous
-    // try {
-    //     let decoded = jwt.verify(token, key);
-    //     data = decoded;
-    // } catch(err) {
-    //     console.log(err);
-    // }
-    // return data;
+    try {
+        let decoded = jwt.verify(token, key);
+        data = decoded;
+    } catch(err) {
+        console.log(err);
+    }
+    return data;
 
     // Asynchronous
-    jwt.verify(token, key, function(err, decoded) {
-        if(err) {
-            console.log(err);
-        } else {
-            data = decoded;
-        }
-    })
-    return data;
+    // jwt.verify(token, key, function(err, decoded) {
+    //     if(err) {
+    //         console.log(err);
+    //     } else {
+    //         data = decoded;
+    //     }
+    // })
+    // return data;
 }
 
 module.exports = {

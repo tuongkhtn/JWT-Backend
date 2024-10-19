@@ -1,6 +1,8 @@
 import bcrypt from "bcrypt"
 import db from "../models/index"
 import { Op } from "sequelize";
+import jwtService from "../service/JWTService"
+import { createToken } from "../middleware/JWTAction"
 
 const salt = bcrypt.genSaltSync(10);
 const hashUserPassword = (password) => {
@@ -85,10 +87,19 @@ const handleLoginUser = async (rawDataUser) => {
 
         if(user) {
             if(checkPassword(rawDataUser.password, user.password)) {
+                let groupWithRoles = await jwtService.getGroupWithRoles(user);
+                let payload = {
+                    email: user.email,
+                    groupWithRoles
+                }
+
                 return {
                     EM: "ok!",
                     EC: 0,
-                    DT: ""
+                    DT: {
+                        access_token: createToken(payload),
+                        data: groupWithRoles
+                    }
                 }
             }
         }
