@@ -33,8 +33,8 @@ const ModalUser = (props) => {
 
     const getGroupName = async () => {
         let response = await getGroupNameFromBackend();
-        if(response && response.data && response.data.EC === 0) {
-            setGroupName(response.data.DT);
+        if(response && response.EC === 0) {
+            setGroupName(response.DT);
         }
     }
 
@@ -80,24 +80,24 @@ const ModalUser = (props) => {
     const handleCreateUser = async () => {
         if(handleValidInputs()) {
             let response = await createNewUser(user);
-            if(response && response.data && response.data.EC === 0) {
+            if(response && response.EC === 0) {
                 props.showNewUser();
                 props.handleClose();
                 setUser(defaultUserInfo);
             } else {
-                toast.error(response.data.EM);
+                toast.error(response.EM);
             }
         }
     }
 
     const handleUpdateUser = async (userInfo) => {
         let response = await updateUserById(userInfo);
-        if(response && response.data && response.data.EC === 0) {
+        if(response && response.EC === 0) {
             props.showNewUser();
             props.handleClose();
             setUser(defaultUserInfo);
         } else {
-            toast.error(response.data.EM);
+            toast.error(response.EM);
         }
     }
 

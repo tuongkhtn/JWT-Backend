@@ -19,9 +19,9 @@ const User = () => {
 
     const getUsers = async () => {
         let response = await getAllUsersFromBackend(page, limit);
-        if(response && response.data) {
-            setTotalPage(response.data.DT.totalPage);
-            setListUsers(response.data.DT.users);
+        if(response) {
+            setTotalPage(response.DT.totalPage);
+            setListUsers(response.DT.users);
         }
     }
 
@@ -49,7 +49,7 @@ const User = () => {
 
     const handleConfirmDeleteUser = async () => {
         let response = await deleteUserById(dataModal);
-        if(response && response.data && response.data.EC === 0) {
+        if(response && response.EC === 0) {
             getUsers();
         }
         handleClose();
@@ -61,8 +61,8 @@ const User = () => {
         setShowModalUser(true);
         if(newAction === "UPDATE") {
             let response = await getUserById(others[0].id);
-            if(response && response.data && response.data.EC === 0) {
-                setUserUpdate(response.data.DT);
+            if(response && response.EC === 0) {
+                setUserUpdate(response.DT);
             } else {
                 console.error("Error to get information user by id");
             }

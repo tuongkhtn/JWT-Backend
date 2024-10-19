@@ -41,8 +41,8 @@ const Login = (props) => {
         if(isValidInputs()) {
             let response = await loginUser(valueLogin, password);
 
-            if(response && response.data) {
-                if(response.data.EC === 0) {
+            if(response) {
+                if(response.EC === 0) {
                     let data = {
                         isAuthenticated: true,
                         token: "Fake token"
@@ -54,7 +54,7 @@ const Login = (props) => {
                     window.location.reload();
 
                 } else {
-                    toast.error(response.data.EM)
+                    toast.error(response.EM)
                 }
             }
         }

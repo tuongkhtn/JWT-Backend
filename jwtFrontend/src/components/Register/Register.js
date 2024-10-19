@@ -70,11 +70,11 @@ const Register = (props) => {
             let dataUser = {email, phone, username, password};
 
             let response = await registerNewUser(dataUser);
-            if(response.data.EC === 0) {
-                toast.success(response.data.EM)
+            if(response && response.EC === 0) {
+                toast.success(response.EM)
                 navigate("/login")
             } else {
-                toast.error(response.data.EM)
+                toast.error(response.EM)
             }
         }
     }
