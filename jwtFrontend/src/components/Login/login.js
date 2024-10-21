@@ -51,7 +51,7 @@ const Login = (props) => {
 
                     navigate("/users")
 
-                    window.location.reload();
+                    // window.location.reload();
 
                 } else {
                     toast.error(response.EM)
