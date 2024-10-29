@@ -12,11 +12,12 @@ const testMiddleware = (req, res, next) => {
 }
 
 const initApiRoutes = (app) => {    
-    router.get("/test-api", apiController.testApi);
+    router.get("*", checkUserJWT, checkUserPermission)
+
     router.post("/register", apiController.handleRegister)
     router.post("/login", apiController.handleLogin)
 
-    router.get("/users/read", checkUserJWT, checkUserPermission, userController.getUsers);
+    router.get("/users/read", userController.getUsers);
     router.get("/users/read/:id", userController.getUserById);
     router.delete("/users/delete", userController.deleteUserById);
     router.post("/users/create", userController.createNewUser);
