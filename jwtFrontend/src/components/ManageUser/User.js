@@ -27,8 +27,6 @@ const User = () => {
 
     useEffect(() => {
         getUsers();
-
-        console.log("Cookie: ", document.cookie)
     }, [page])
 
     // pagination
